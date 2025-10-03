@@ -54,5 +54,24 @@ class Application(tk.Tk):
         tk.Label(self, text="Output:").pack(anchor="w", padx=10)
         self.output_box = tk.Text(self, height=22, width=100)
         self.output_box.pack(padx=10, pady=(0,10))
+def choose_image(self):
+        path = filedialog.askopenfilename(
+            title="Select image",
+            filetypes=[("Image files", ".png *.jpg *.jpeg *.bmp *.gif"), ("All files", ".*")]
+        )
+        if path:
+            self.selected_image_path = path
+            self.image_label.config(text=path)
 
+    @log_execution
+    def run_sentiment(self):
+        text = self.text_entry.get().strip()
+        if not text:
+            messagebox.showwarning("Input Error", "Please enter text.")
+            return
+        try:
+            result = self.sentiment.run(text)
+            self.output_box.insert(tk.END, f"\nSentiment Analysis:\n{result}\n")
+        except Exception as e:
+            messagebox.showerror("Error", f"Sentiment failed: {e}")
 
