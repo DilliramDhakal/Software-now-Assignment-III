@@ -26,3 +26,14 @@ class Application(tk.Tk):
             "google/vit-base-patch16-224",
             "image-classification"
         )
+
+    def choose_image(self):
+        path = filedialog.askopenfilename(
+            title="Select image",
+            filetypes=[("Image files", "*.png *.jpg *.jpeg *.bmp *.gif"), ("All files", "*.*")]
+        )
+        if path:
+            self.selected_image_path = path
+            self.image_label.config(text=path)
+
+    
