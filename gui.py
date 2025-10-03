@@ -63,15 +63,6 @@ class Application(tk.Tk):
             self.selected_image_path = path
             self.image_label.config(text=path)
 
-    def choose_image(self):
-        path = filedialog.askopenfilename(
-            title="Select image",
-            filetypes=[("Image files", ".png *.jpg *.jpeg *.bmp *.gif"), ("All files", ".*")]
-        )
-        if path:
-            self.selected_image_path = path
-            self.image_label.config(text=path)
-
     @log_execution
     def run_sentiment(self):
         text = self.text_entry.get().strip()
@@ -83,3 +74,20 @@ class Application(tk.Tk):
             self.output_box.insert(tk.END, f"\nSentiment Analysis:\n{result}\n")
         except Exception as e:
             messagebox.showerror("Error", f"Sentiment failed: {e}")
+            
+    @log_execution
+    def run_image_classification(self):
+        if not self.selected_image_path:
+            messagebox.showwarning("Input Error", "Please select an image file first.")
+            return
+        try:
+            result = self.imgclf.run(self.selected_image_path)
+            self.output_box.insert(tk.END, f"\nImage Classification ({self.selected_image_path}):\n{result}\n")
+        except Exception as e:
+            messagebox.showerror("Error", f"Classification failed: {e}")
+
+    def show_explanations(self):
+        self.output_box.insert(tk.END, "\n--- OOP Explanations ---\n")
+        for key, value in explanations.items():
+            self.output_box.insert(tk.END, f"{key.capitalize()}: {value}\n")
+
