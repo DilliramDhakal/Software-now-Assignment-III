@@ -12,5 +12,13 @@ class BaseModel:
 
     def run(self, input_data):
         raise NotImplementedError("Subclasses must override run")
+class SentimentAnalysisModel(BaseModel):
+    def load_model(self):
+        """model loads here"""
+        if self.pipe is None:
+            self.pipe = pipeline("sentiment-analysis", model=self.model_name)
 
+    def run(self, input_data):
+        self.load_model()
+        return self.pipe(input_data)
     
