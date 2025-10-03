@@ -26,6 +26,9 @@ class Application(tk.Tk):
             "google/vit-base-patch16-224",
             "image-classification"
         )
+        self.selected_image_path = None
+        self.create_widgets()
+        
     def create_widgets(self):
         # Input for text
         tk.Label(self, text="Enter text input:").pack(anchor="w", padx=10, pady=(10,0))
