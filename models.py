@@ -21,4 +21,16 @@ class SentimentAnalysisModel(BaseModel):
     def run(self, input_data):
         self.load_model()
         return self.pipe(input_data)
+
+class ImageClassificationModel(BaseModel):
+    def load_model(self):
+        """Load an image classification pipeline."""
+        if self.pipe is None:
+            # Supported models: ViT or ResNet
+            self.pipe = pipeline("image-classification", model=self.model_name)
+
+    def run(self, input_image_path):
+        """Run image classification on a given image path."""
+        self.load_model()
+        return self.pipe(images=input_image_path)
     
