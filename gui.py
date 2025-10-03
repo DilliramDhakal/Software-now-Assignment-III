@@ -55,11 +55,4 @@ class Application(tk.Tk):
         self.output_box = tk.Text(self, height=22, width=100)
         self.output_box.pack(padx=10, pady=(0,10))
 
-    def choose_image(self):
-        path = filedialog.askopenfilename(
-            title="Select image",
-            filetypes=[("Image files", "*.png *.jpg *.jpeg *.bmp *.gif"), ("All files", "*.*")]
-        )
-        if path:
-            self.selected_image_path = path
-            self.image_label.config(text=path)
+
